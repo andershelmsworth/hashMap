@@ -1,8 +1,8 @@
 /*
  * CS 261 Data Structures
  * Assignment 5
- * Name: 
- * Date: 
+ * Name: Andrew Helmsworth
+ * Date: 2020/02/18
  */
 
 #include "hashMap.h"
