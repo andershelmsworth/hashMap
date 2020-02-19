@@ -66,24 +66,25 @@ void loadDictionary(FILE* file, HashMap* map)
  * @param argv
  * @return
  */
-int main(int argc, const char** argv)
+int main2(int argc, const char** argv)
 {
     // FIXME: implement
     HashMap* map = hashMapNew(1000);
-
-    FILE* file = fopen("dictionary.txt", "r");
+    //The line below is probably wrong. FIXME
+    FILE* file;
+    fopen_s(&file, "dictionary.txt", "r");
     clock_t timer = clock();
     loadDictionary(file, map);
     timer = clock() - timer;
     printf("Dictionary loaded in %f seconds\n", (float)timer / (float)CLOCKS_PER_SEC);
-    fclose(file);
+    fclose(&file);
 
     char inputBuffer[256];
     int quit = 0;
     while (!quit)
     {
         printf("Enter a word or \"quit\" to quit: ");
-        scanf("%s", inputBuffer);
+        scanf_s("%s", inputBuffer);
 
         // Implement the spell checker code here..
 

@@ -43,7 +43,7 @@ HashLink* hashLinkNew(const char* key, int value, HashLink* next)
 {
     HashLink* link = malloc(sizeof(HashLink));
     link->key = malloc(sizeof(char) * (strlen(key) + 1));
-    strcpy(link->key, key);
+    strcpy_s(link->key, sizeof(key), key);
     link->value = value;
     link->next = next;
     return link;
