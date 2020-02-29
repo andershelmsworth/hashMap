@@ -42,8 +42,10 @@ int hashFunction2(const char* key)
 HashLink* hashLinkNew(const char* key, int value, HashLink* next)
 {
     HashLink* link = malloc(sizeof(HashLink));
+    assert(link != 0);
     link->key = malloc(sizeof(char) * (strlen(key) + 1));
-    strcpy_s(link->key, sizeof(key), key);
+    assert(link->key != 0);
+    strcpy(link->key, key);
     link->value = value;
     link->next = next;
     return link;
