@@ -72,6 +72,7 @@ void hashMapInit(HashMap* map, int capacity)
     map->capacity = capacity;
     map->size = 0;
     map->table = malloc(sizeof(HashLink*) * capacity);
+    assert(map->table != 0);
     for (int i = 0; i < capacity; i++)
     {
         map->table[i] = NULL;
