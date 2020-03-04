@@ -75,7 +75,7 @@ void hashMapInit(HashMap* map, int capacity)
     assert(map->table != 0);
     for (int i = 0; i < capacity; i++)
     {
-        map->table[i] = NULL;
+        map->table[i] = 0;
     }
 }
 
@@ -161,7 +161,16 @@ void resizeTable(HashMap* map, int capacity)
  */
 void hashMapPut(HashMap* map, const char* key, int value)
 {
+    //Variable declarations
+    struct HashLink* newLink;
     // FIXME: implement
+    //Check map, key, value not null
+    assert(map != 0);
+    assert(key != NULL);
+    assert(value != NULL);
+
+    //newLink = hashLinkNew(key, value, ?);
+
 }
 
 /**
