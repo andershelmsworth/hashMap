@@ -182,6 +182,10 @@ void hashMapPut(HashMap* map, const char* key, int value)
  */
 void hashMapRemove(HashMap* map, const char* key)
 {
+    //Variable declarations
+    HashLink* linkToRemove;
+
+
     // FIXME: implement
     assert(map != NULL);
     assert(key != NULL);
