@@ -189,6 +189,9 @@ void hashMapRemove(HashMap* map, const char* key)
     // FIXME: implement
     assert(map != NULL);
     assert(key != NULL);
+
+    //Get the link with the given key, assign to pointer
+    linkToRemove = hashMapGet(map, key);
 }
 
 /**

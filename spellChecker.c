@@ -28,6 +28,8 @@ char* nextWord(FILE* file)
             if (length + 1 >= maxLength)
             {
                 maxLength *= 2;
+                //Trying to FIXME realloc warning
+                assert(word != NULL);
                 word = realloc(word, maxLength);
             }
             word[length] = c;
