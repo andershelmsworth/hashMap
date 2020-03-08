@@ -192,6 +192,9 @@ void hashMapRemove(HashMap* map, const char* key)
 
     //Get the link with the given key, assign to pointer
     linkToRemove = hashMapGet(map, key);
+
+    //Check link found
+    assert(linkToRemove != NULL);
 }
 
 /**
