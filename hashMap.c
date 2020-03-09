@@ -387,14 +387,26 @@ void hashMapRemove(HashMap* map, const char* key)
 
             //If current matches the passed in key  
             if (strcmp(currentLink->key, key) == 0) {
-                //Splice out
-                previousLink->next = currentLink->next;
                 
-                //Delete the link
-                hashLinkDelete(currentLink);
+                if (previousLink != currentLink) {
+                    //Splice out
+                    previousLink->next = currentLink->next;
 
-                //Decrement size
-                map->size--;
+                    //Delete the link
+                    hashLinkDelete(currentLink);
+
+                    //Decrement size
+                    map->size--;
+                }
+                else {
+                    //Last link in list, set bucket to null
+                    map->table[bucketIndex] = 0;
+                    //Delete the link
+                    hashLinkDelete(currentLink);
+                    //Decrement size
+                    map->size--;
+                }
+
             }
             else {
                 //Advance current link
