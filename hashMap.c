@@ -521,8 +521,20 @@ int hashMapEmptyBuckets(HashMap* map)
  */
 float hashMapTableLoad(HashMap* map)
 {
-    // FIXME: implement
-    return 0;
+    //Variable declarations
+    float numLinksFloat;
+    float numBucketsFloat;
+    float ratio;
+
+    //Get float of links and buckets
+    numLinksFloat = (float)map->size;
+    numBucketsFloat = (float)map->capacity;
+
+    //Get the ratio
+    ratio = numLinksFloat / numBucketsFloat;
+
+    // FIXED: implement
+    return ratio;
 }
 
 /**
