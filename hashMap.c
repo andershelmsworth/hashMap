@@ -356,17 +356,53 @@ void hashMapRemove(HashMap* map, const char* key)
 {
     //Variable declarations
     HashLink* linkToRemove;
-
+    HashLink* currentLink;
+    HashLink* previousLink;
+    int i;
 
     // FIXME: implement
     assert(map != NULL);
-    assert(key != NULL);
 
     //Get the link with the given key, assign to pointer
     linkToRemove = hashMapGet(map, key);
 
-    //Check link found
-    assert(linkToRemove != NULL);
+    //There is a link to remove
+    if (linkToRemove != NULL) {
+
+        //For each bucket in the map
+        for (i = 0; i < map->size; i++) {
+
+            currentLink = map->table[i];
+
+            //If the top link is the link to remove
+            if (strcmp(currentLink->key, key) == 0) {
+                //bucket gets next item, or null if there is none
+                map->table[i] = currentLink->next;
+            }
+            else {
+                //Top link is not the link to remove
+                while (currentLink != 0) {
+                    //Set previous and advance current
+                    previousLink = currentLink;
+                    currentLink = currentLink->next;
+
+                    //Key was found
+                    if (strcmp(currentLink->key, key) == 0) {
+                        //Splice out the old link
+                        previousLink->next = currentLink->next;
+
+                        //Free the old link
+                        hashLinkDelete(currentLink);
+                    }
+
+                    //Will continue through list, this would handle duplicates if any existed
+                }
+                //Not found
+            }
+        }
+
+    }
+    //Do nothing if not found
 }
 
 /**
