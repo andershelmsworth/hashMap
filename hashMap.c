@@ -149,7 +149,7 @@ void hashMapDelete(HashMap* map)
  */
 int* hashMapGet(HashMap* map, const char* key)
 {
-    // FIXME: implement
+    // FIXME: implement start here
     return NULL;
 }
 
