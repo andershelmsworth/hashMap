@@ -179,9 +179,10 @@ int* hashMapGet(HashMap* map, const char* key)
             if (strcmp(currentLink->key, key) == 0) {
                 return &(currentLink->value);
             }
-
-            //Advance current link
-            currentLink = currentLink->next;
+            else {
+                //Advance current link
+                currentLink = currentLink->next;
+            }
         }
     }
 
@@ -314,9 +315,10 @@ void hashMapPut(HashMap* map, const char* key, int value)
                     currentLink->value = value;
                     keepLooping = 0;
                 }
-
-                //Advance the current pointer
-                currentLink = currentLink->next;
+                else {
+                    //Advance the current pointer
+                    currentLink = currentLink->next;
+                }
             }
         }
         else if ((currentLink == 0) && (keepLooping == 1)) {
@@ -358,26 +360,26 @@ void hashMapRemove(HashMap* map, const char* key)
     HashLink* currentLink;
     HashLink* previousLink;
     int i;
+    int hashedValue;
+    int bucketIndex;
 
     // FIXME: implement
     assert(map != NULL);
 
-    //Get the link with the given key, assign to pointer
-    linkToRemove = hashMapGet(map, key);
+    //Get the bucket from the hashed value and the cap
+    hashedValue = HASH_FUNCTION(key);
+    bucketIndex = hashedValue % map->capacity;
 
-    //There is a link to remove
-    if (linkToRemove != NULL) {
+    currentLink = map->table[bucketIndex];
 
-        //For each bucket in the map
-        for (i = 0; i < map->size; i++) {
+    //If the top link isn't null
+    if (currentLink != NULL) {
 
-            currentLink = map->table[i];
+        //While current link is still not null
+        while (currentLink != NULL) {
 
-            //If the top link is the link to remove
+            //If current matches the passed in key  
             if (strcmp(currentLink->key, key) == 0) {
-                //bucket gets next item, or null if there is none
-                map->table[i] = currentLink->next;
-
                 //Delete the link
                 hashLinkDelete(currentLink);
 
@@ -385,32 +387,12 @@ void hashMapRemove(HashMap* map, const char* key)
                 map->size--;
             }
             else {
-                //Top link is not the link to remove
-                while (currentLink != 0) {
-                    //Set previous and advance current
-                    previousLink = currentLink;
-                    currentLink = currentLink->next;
-
-                    //Key was found
-                    if (strcmp(currentLink->key, key) == 0) {
-                        //Splice out the old link
-                        previousLink->next = currentLink->next;
-
-                        //Free the old link
-                        hashLinkDelete(currentLink);
-
-                        //Decrement size
-                        map->size--;
-                    }
-
-                    //Will continue through list, this would handle duplicates if any existed
-                }
-                //Not found
+                //Advance current link
+                currentLink = currentLink->next;
             }
+            
         }
-
     }
-    //Do nothing if not found
 }
 
 /**

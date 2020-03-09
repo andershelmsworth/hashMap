@@ -29,7 +29,7 @@ char* CuStrCopy(const char* old)
 {
 	int len = strlen(old);
 	char* newStr = CuStrAlloc(len + 1);
-	strcpy_s(newStr, sizeof(old), old);
+	strcpy(newStr, old);
 	return newStr;
 }
 
@@ -80,7 +80,7 @@ void CuStringAppend(CuString* str, const char* text)
 	if (str->length + length + 1 >= str->size)
 		CuStringResize(str, str->length + length + 1 + STRING_INC);
 	str->length += length;
-	strcat_s(str->buffer, sizeof(text), text);
+	strcat(str->buffer, text);
 }
 
 void CuStringAppendChar(CuString* str, char ch)
@@ -96,7 +96,7 @@ void CuStringAppendFormat(CuString* str, const char* format, ...)
 	va_list argp;
 	char buf[HUGE_STRING_LEN];
 	va_start(argp, format);
-	vsprintf_s(buf, sizeof(buf), format, argp);
+	vsprintf(buf, format, argp);
 	va_end(argp);
 	CuStringAppend(str, buf);
 }
@@ -169,7 +169,7 @@ static void CuFailInternal(CuTest* tc, const char* file, int line, CuString* str
 {
 	char buf[HUGE_STRING_LEN];
 
-	sprintf_s(buf, sizeof(buf), "%s:%d: ", file, line);
+	sprintf(buf, "%s:%d: ", file, line);
 	CuStringInsert(string, buf, 0);
 
 	tc->failed = 1;
@@ -227,7 +227,7 @@ void CuAssertIntEquals_LineMsg(CuTest* tc, const char* file, int line, const cha
 {
 	char buf[STRING_MAX];
 	if (expected == actual) return;
-	sprintf_s(buf, sizeof(buf), "expected <%d> but was <%d>", expected, actual);
+	sprintf(buf, "expected <%d> but was <%d>", expected, actual);
 	CuFail_Line(tc, file, line, message, buf);
 }
 
@@ -236,7 +236,7 @@ void CuAssertDblEquals_LineMsg(CuTest* tc, const char* file, int line, const cha
 {
 	char buf[STRING_MAX];
 	if (fabs(expected - actual) <= delta) return;
-	sprintf_s(buf, sizeof(buf), "expected <%f> but was <%f>", expected, actual); 
+	sprintf(buf, "expected <%f> but was <%f>", expected, actual); 
 
 	CuFail_Line(tc, file, line, message, buf);
 }
@@ -246,7 +246,7 @@ void CuAssertPtrEquals_LineMsg(CuTest* tc, const char* file, int line, const cha
 {
 	char buf[STRING_MAX];
 	if (expected == actual) return;
-	sprintf_s(buf, sizeof(buf), "expected pointer <0x%p> but was <0x%p>", expected, actual);
+	sprintf(buf, "expected pointer <0x%p> but was <0x%p>", expected, actual);
 	CuFail_Line(tc, file, line, message, buf);
 }
 
