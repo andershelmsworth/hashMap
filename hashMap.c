@@ -314,6 +314,8 @@ void hashMapPut(HashMap* map, const char* key, int value)
                 if (strcmp(currentLink->key, key) == 0) {
                     currentLink->value = value;
                     keepLooping = 0;
+                    //Skip further traversal
+                    i = map->capacity + 5;
                 }
                 else {
                     //Advance the current pointer
@@ -331,15 +333,20 @@ void hashMapPut(HashMap* map, const char* key, int value)
             nextLink = 0;
 
             //Get head node of bucket list if there is one
-            if (map->table[i] != 0) {
-                nextLink = map->table[i];
+            if (map->table[bucketIndex] != 0) {
+                nextLink = map->table[bucketIndex];
             }
 
             //Make the new link
             newLink = hashLinkNew(key, value, nextLink);
 
+            map->table[bucketIndex] = newLink;
+
             //Update size
             map->size++;
+
+            //Skip further traversal
+            i = map->capacity + 5;
         }
     }
 
@@ -356,10 +363,9 @@ void hashMapPut(HashMap* map, const char* key, int value)
 void hashMapRemove(HashMap* map, const char* key)
 {
     //Variable declarations
-    HashLink* linkToRemove;
+    //HashLink* linkToRemove;
     HashLink* currentLink;
     HashLink* previousLink;
-    int i;
     int hashedValue;
     int bucketIndex;
 
@@ -371,6 +377,7 @@ void hashMapRemove(HashMap* map, const char* key)
     bucketIndex = hashedValue % map->capacity;
 
     currentLink = map->table[bucketIndex];
+    previousLink = currentLink;
 
     //If the top link isn't null
     if (currentLink != NULL) {
@@ -380,6 +387,9 @@ void hashMapRemove(HashMap* map, const char* key)
 
             //If current matches the passed in key  
             if (strcmp(currentLink->key, key) == 0) {
+                //Splice out
+                previousLink->next = currentLink->next;
+                
                 //Delete the link
                 hashLinkDelete(currentLink);
 
@@ -388,6 +398,7 @@ void hashMapRemove(HashMap* map, const char* key)
             }
             else {
                 //Advance current link
+                previousLink = currentLink;
                 currentLink = currentLink->next;
             }
             

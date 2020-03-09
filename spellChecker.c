@@ -28,8 +28,6 @@ char* nextWord(FILE* file)
             if (length + 1 >= maxLength)
             {
                 maxLength *= 2;
-                //Trying to FIXME realloc warning
-                assert(word != NULL);
                 word = realloc(word, maxLength);
             }
             word[length] = c;
@@ -68,29 +66,28 @@ void loadDictionary(FILE* file, HashMap* map)
  * @param argv
  * @return
  */
-int main2(int argc, const char** argv)
+int main(int argc, const char** argv)
 {
     // FIXME: implement
     HashMap* map = hashMapNew(1000);
-    //The line below is probably wrong. FIXME
-    FILE* file;
-    fopen_s(&file, "dictionary.txt", "r");
+
+    FILE* file = fopen("dictionary.txt", "r");
     clock_t timer = clock();
     loadDictionary(file, map);
     timer = clock() - timer;
     printf("Dictionary loaded in %f seconds\n", (float)timer / (float)CLOCKS_PER_SEC);
-    fclose(&file);
+    fclose(file);
 
     char inputBuffer[256];
     int quit = 0;
     while (!quit)
     {
         printf("Enter a word or \"quit\" to quit: ");
-        scanf_s("%s", inputBuffer);
+        scanf("%s", inputBuffer);
 
         // Implement the spell checker code here..
 
-        if ((strcmp(inputBuffer, "quit") == 0) || (strcmp(inputBuffer, "quit") == 0))
+        if (strcmp(inputBuffer, "quit") == 0)
         {
             quit = 1;
         }
