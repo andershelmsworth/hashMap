@@ -62,7 +62,7 @@ static void hashLinkDelete(HashLink* link)
 }
 
 /**
- * Initializes a hash table map, allocating memory for a link pointer table with
+ * Initializes a hash table map, allocating memory for a link-pointer table with
  * the given number of buckets.
  * @param map
  * @param capacity The number of table buckets.
@@ -86,7 +86,30 @@ void hashMapInit(HashMap* map, int capacity)
  */
 void hashMapCleanUp(HashMap* map)
 {
-    // FIXME: implement
+    //Variable declarations
+    int i;
+    HashLink* currentLink;
+    HashLink* tempLink;
+    // FIXED: implement
+
+    //For each link in the bucket
+    for (i = 0; i < map->capacity; i++) {
+        //If there is data in the bucket
+        if (map->table[i] != 0) {
+            //Get the top link
+            currentLink = map->table[i];
+            //While the bucket is still not empty
+            while (map->table[i] != 0) {
+                //Set temp to current
+                tempLink = currentLink;
+                //Walk current forward
+                currentLink = currentLink->next;
+                //Free the old link
+                hashLinkDelete(tempLink);
+            }
+        }
+    }
+
 }
 
 /**
@@ -114,7 +137,7 @@ void hashMapDelete(HashMap* map)
 }
 
 /**
- * Returns a pointer to the value of the link with the given key  and skip traversing as well. Returns NULL
+ * Returns a pointer to the value of the link with the given key  and skip traversing FIXME as well. Returns NULL
  * if no link with that key is in the table.
  * 
  * Use HASH_FUNCTION(key) and the map's capacity to find the index of the
