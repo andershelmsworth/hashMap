@@ -90,7 +90,7 @@ int main2(int argc, const char** argv)
 
         // Implement the spell checker code here..
 
-        if (strcmp(inputBuffer, "quit") == 0)
+        if ((strcmp(inputBuffer, "quit") == 0) || (strcmp(inputBuffer, "quit") == 0))
         {
             quit = 1;
         }
