@@ -1,5 +1,6 @@
 #ifndef HASH_MAP_H
 #define HASH_MAP_H
+#define _CRT_SECURE_NO_WARNINGS
 
 /*
  * CS 261 Data Structures

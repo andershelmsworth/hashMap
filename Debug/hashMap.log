@@ -1,10 +1,7 @@
-﻿  CuTest.c
-  hashMap.c
-C:\Users\Work\source\repos\hashMap\hashMap.c(48,1): error C4996: 'strcpy': This function or variable may be unsafe. Consider using strcpy_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
-C:\Program Files (x86)\Windows Kits\10\Include\10.0.18362.0\ucrt\string.h(133): message : see declaration of 'strcpy'
-C:\Users\Work\source\repos\hashMap\hashMap.c(193,5): warning C4047: '!=': 'int' differs in levels of indirection from 'void *'
-C:\Users\Work\source\repos\hashMap\hashMap.c(188,22): warning C4101: 'newLink': unreferenced local variable
-C:\Users\Work\source\repos\hashMap\hashMap.c(217,40): warning C4133: '=': incompatible types - from 'int *' to 'HashLink *'
+﻿  hashMap.c
+C:\Users\Work\source\repos\hashMap\hashMap.c(180,42): warning C4047: 'return': 'int *' differs in levels of indirection from 'int'
+C:\Users\Work\source\repos\hashMap\hashMap.c(366,40): warning C4133: '=': incompatible types - from 'int *' to 'HashLink *'
+C:\Users\Work\source\repos\hashMap\hashMap.c(491,9): warning C4101: 'emptyCounter': unreferenced local variable
   spellChecker.c
 C:\Users\Work\source\repos\hashMap\spellChecker.c(82,17): warning C4047: 'function': 'FILE *' differs in levels of indirection from 'FILE **'
 C:\Users\Work\source\repos\hashMap\spellChecker.c(82,17): warning C4024: 'fclose': different types for formal and actual parameter 1
@@ -12,9 +9,8 @@ C:\Users\Work\source\repos\hashMap\spellChecker.c(89,17): warning C4473: 'scanf_
 C:\Users\Work\source\repos\hashMap\spellChecker.c(89,17): message : placeholders and their parameters expect 2 variadic arguments, but 1 were provided
 C:\Users\Work\source\repos\hashMap\spellChecker.c(89,17): message : the missing variadic argument 2 is required by format string '%s'
 C:\Users\Work\source\repos\hashMap\spellChecker.c(89,17): message : this argument is used as a buffer size
-C:\Users\Work\source\repos\hashMap\spellChecker.c(93,49): error C2059: syntax error: ')'
-C:\Users\Work\source\repos\hashMap\spellChecker.c(99,5): error C2371: 'hashMapDelete': redefinition; different basic types
-C:\Users\Work\source\repos\hashMap\hashMap.h(32): message : see declaration of 'hashMapDelete'
-C:\Users\Work\source\repos\hashMap\spellChecker.c(100,5): error C2059: syntax error: 'return'
-C:\Users\Work\source\repos\hashMap\spellChecker.c(101,1): error C2059: syntax error: '}'
+  tests.c
+C:\Users\Work\source\repos\hashMap\tests.c(156,5): warning C4244: 'function': conversion from 'float' to 'int', possible loss of data
+C:\Users\Work\source\repos\hashMap\tests.c(200,5): warning C4244: 'function': conversion from 'float' to 'int', possible loss of data
   Generating Code...
+  hashMap.vcxproj -> C:\Users\Work\source\repos\hashMap\Debug\hashMap.exe

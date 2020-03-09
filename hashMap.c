@@ -377,6 +377,12 @@ void hashMapRemove(HashMap* map, const char* key)
             if (strcmp(currentLink->key, key) == 0) {
                 //bucket gets next item, or null if there is none
                 map->table[i] = currentLink->next;
+
+                //Delete the link
+                hashLinkDelete(currentLink);
+
+                //Decrement size
+                map->size--;
             }
             else {
                 //Top link is not the link to remove
@@ -392,6 +398,9 @@ void hashMapRemove(HashMap* map, const char* key)
 
                         //Free the old link
                         hashLinkDelete(currentLink);
+
+                        //Decrement size
+                        map->size--;
                     }
 
                     //Will continue through list, this would handle duplicates if any existed
@@ -436,8 +445,18 @@ int hashMapContainsKey(HashMap* map, const char* key)
  */
 int hashMapSize(HashMap* map)
 {
-    // FIXME: implement
-    return 0;
+    //Variable declarations
+    int mapSize;
+
+    //Check map not null
+    assert(map != 0);
+
+    //Get size
+    mapSize = map->size;
+
+    // FIXED: implement
+    //Return the size
+    return mapSize;
 }
 
 /**
@@ -447,8 +466,18 @@ int hashMapSize(HashMap* map)
  */
 int hashMapCapacity(HashMap* map)
 {
-    // FIXME: implement
-    return 0;
+    //Variable declarations
+    int currentCap;
+
+    //Check map not null
+    assert(map != 0);
+
+    //Get capacity
+    currentCap = map->capacity;
+
+    // FIXED: implement
+    //Return capacity
+    return currentCap;
 }
 
 /**
@@ -458,8 +487,28 @@ int hashMapCapacity(HashMap* map)
  */
 int hashMapEmptyBuckets(HashMap* map)
 {
-    // FIXME: implement
-    return 0;
+    //Variable declarations
+    int emptyCounter;
+    int i;
+
+    //Check map not null
+    assert(map != 0);
+
+    //Init counter
+    emptyCounter = 0;
+
+    //Loop over each bucket
+    for (i = 0; i < map->capacity; i++) {
+
+        //If the bucket is empty
+        if (map->table[i] == NULL) {
+            //Increment emptyCounter
+            emptyCounter++;
+        }
+    }
+
+    // FIXED: implement
+    return emptyCounter;
 }
 
 /**
