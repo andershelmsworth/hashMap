@@ -554,7 +554,7 @@ void hashMapPrint(HashMap* map)
     for (i = 0; i < map->capacity; i++) {
         
         //Print bucket index
-        print("%d: ", i);
+        printf("%d: ", i);
         
         //Get head link
         currentLink = map->table[i];
@@ -564,13 +564,13 @@ void hashMapPrint(HashMap* map)
             //While it is still set to a value that is not null
             while (currentLink != 0) {
                 //Print a tuple of the key-value pair
-                print("(key: %s, val: %d) ", currentLink->key, currentLink->value);
+                printf("(key: %s, val: %d) ", currentLink->key, currentLink->value);
                 //Advance current counter
                 currentLink = currentLink->next;
             }
         }
         //Newline to prep for next bucket
-        print("\n\n");
+        printf("\n\n");
     }
 
   // FIXED: implement
