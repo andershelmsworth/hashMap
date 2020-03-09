@@ -159,7 +159,7 @@ int* hashMapGet(HashMap* map, const char* key)
     int bucketIndex;
     HashLink* currentLink;
 
-    // FIXME: implement start here
+    // FIXED: implement start here
     //Check map not null
     assert(map != 0);
 
@@ -202,7 +202,67 @@ int* hashMapGet(HashMap* map, const char* key)
  */
 void resizeTable(HashMap* map, int capacity)
 {
-    // FIXME: implement
+    //Variable declarations
+    HashLink* currentLink;
+    HashLink* nextLink;
+    HashLink* newLink;
+    HashMap* newMap;
+    HashMap* tempMapPointer;
+    int i;
+    int bucketIndex;
+    int newHashValue;
+
+    // FIXED: implement
+    //Check map not null
+    assert(map != 0);
+
+    //Allocate memory for new table, check that worked
+    newMap = hashMapNew(capacity);
+    assert(newMap != 0);
+
+    //For each bucket in the old array
+    for (i = 0; i < map->capacity; i++) {
+
+        //Set current to the top link in bucket
+        currentLink = map->table[i];
+
+        //If the bucket is not empty
+        if (currentLink != 0) {
+
+            //While current is still not set to an empty link
+            while (currentLink != 0) {
+
+                //Hash the new key, set bucket index to mod of cap
+                newHashValue = HASH_FUNCTION(currentLink->key);
+                bucketIndex = newHashValue % capacity;
+
+                //Initialize nextLink to 0
+                nextLink = 0;
+
+                //If there is a next link, set it
+                if (currentLink->next != 0) {
+                    nextLink = currentLink->next;
+                }
+
+                //Build the new link, check that worked
+                 newLink = hashLinkNew(currentLink->key, currentLink->value, nextLink);
+                 assert(newLink != 0);
+
+                 //Assign link value to new bucket
+                 newMap->table[bucketIndex] = newLink;
+
+                 //Advance the current pointer
+                 currentLink = currentLink->next;
+            }
+        }
+    }
+
+    //Set the old map to a temp pointer, update map to newMap
+    tempMapPointer = map;
+    map = newMap;
+
+    //Free the old map
+    free(tempMapPointer);
 }
 
 /**
