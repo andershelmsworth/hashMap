@@ -142,7 +142,7 @@ void hashMapDelete(HashMap* map)
 }
 
 /**
- * Returns a pointer to the value of the link with the given key  and skip traversing FIXME as well. Returns NULL
+ * Returns a pointer to the value of the link with the given key  and skip traversing as well. Returns NULL
  * if no link with that key is in the table.
  * 
  * Use HASH_FUNCTION(key) and the map's capacity to find the index of the
@@ -290,10 +290,9 @@ void hashMapPut(HashMap* map, const char* key, int value)
     int keepLooping;
 
     // FIXED: implement
-    //Check map, key, value not null
+    //Check map, key not null
     assert(map != 0);
     assert(key != NULL);
-    assert(value != NULL);
 
     //Init keepLooping to 1, this allows early traversal exit
     keepLooping = 1;
@@ -417,7 +416,13 @@ void hashMapRemove(HashMap* map, const char* key)
  */
 int hashMapContainsKey(HashMap* map, const char* key)
 {
-    // FIXME: implement
+    //If get returns something
+    if (hashMapGet(map, key) != NULL) {
+        //Found the key
+        return 1;
+    }
+    // FIXED: implement
+    //Didn't find the key
     return 0;
 }
 
