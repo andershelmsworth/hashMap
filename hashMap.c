@@ -543,7 +543,36 @@ float hashMapTableLoad(HashMap* map)
  */
 void hashMapPrint(HashMap* map)
 {
-  // FIXME: implement
+    //Variable declarations
+    HashLink* currentLink;
+    int i;
 
-   
+    //Check map not null
+    assert(map != 0);
+
+    //For each bucket
+    for (i = 0; i < map->capacity; i++) {
+        
+        //Print bucket index
+        print("%d: ", i);
+        
+        //Get head link
+        currentLink = map->table[i];
+
+        //if head link is not null
+        if (currentLink != 0) {
+            //While it is still set to a value that is not null
+            while (currentLink != 0) {
+                //Print a tuple of the key-value pair
+                print("(key: %s, val: %d) ", currentLink->key, currentLink->value);
+                //Advance current counter
+                currentLink = currentLink->next;
+            }
+        }
+        //Newline to prep for next bucket
+        print("\n\n");
+    }
+
+  // FIXED: implement
+
 }
