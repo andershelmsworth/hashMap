@@ -92,6 +92,9 @@ void hashMapCleanUp(HashMap* map)
     HashLink* tempLink;
     // FIXED: implement
 
+    //Check map not null
+    assert(map != 0);
+
     //For each link in the bucket
     for (i = 0; i < map->capacity; i++) {
         //If there is data in the bucket
@@ -132,6 +135,8 @@ HashMap* hashMapNew(int capacity)
  */
 void hashMapDelete(HashMap* map)
 {
+    //Check map not null
+    assert(map != 0);
     hashMapCleanUp(map);
     free(map);
 }
@@ -149,7 +154,38 @@ void hashMapDelete(HashMap* map)
  */
 int* hashMapGet(HashMap* map, const char* key)
 {
+    //Variable declarations
+    int hashedValue;
+    int bucketIndex;
+    HashLink* currentLink;
+
     // FIXME: implement start here
+    //Check map not null
+    assert(map != 0);
+
+    //Get the bucket from the hashed value and the cap
+    hashedValue = HASH_FUNCTION(key);
+    bucketIndex = hashedValue % map->capacity;
+
+    currentLink = map->table[bucketIndex];
+
+    //If the top link isn't null
+    if (currentLink != NULL) {
+
+        //While current link is still not null
+        while (currentLink != NULL) {
+
+            //If current matches the passed in key  
+            if (strcmp(currentLink->key, key) == 0) {
+                return currentLink->value;
+            }
+
+            //Advance current link
+            currentLink = currentLink->next;
+        }
+    }
+
+    //Not found
     return NULL;
 }
 
