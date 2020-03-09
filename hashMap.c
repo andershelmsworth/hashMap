@@ -177,7 +177,7 @@ int* hashMapGet(HashMap* map, const char* key)
 
             //If current matches the passed in key  
             if (strcmp(currentLink->key, key) == 0) {
-                return currentLink->value;
+                return &(currentLink->value);
             }
 
             //Advance current link
