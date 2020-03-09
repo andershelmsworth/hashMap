@@ -416,6 +416,9 @@ void hashMapRemove(HashMap* map, const char* key)
  */
 int hashMapContainsKey(HashMap* map, const char* key)
 {
+    //Check map not null
+    assert(map != 0);
+
     //If get returns something
     if (hashMapGet(map, key) != NULL) {
         //Found the key
