@@ -219,9 +219,8 @@ void resizeTable(HashMap* map, int capacity)
 {
     //Variable declarations
     HashLink* currentLink;
-    //HashLink* nextLink;
-    //HashLink* newLink;
     HashMap* newMap;
+    HashMap* oldMap;
     HashLink* tempMapPointer;
     int i;
     int bucketIndex;
@@ -230,6 +229,7 @@ void resizeTable(HashMap* map, int capacity)
     // FIXED: implement
     //Check map not null
     assert(map != 0);
+    oldMap = map;
 
     //Allocate memory for new table, check that worked
     newMap = hashMapNew(capacity);
@@ -246,50 +246,21 @@ void resizeTable(HashMap* map, int capacity)
 
             //While current is still not set to an empty link
             while (currentLink != 0) {
-                
                 hashMapPut(newMap, currentLink->key, currentLink->value);
-                /*
-                //Hash the new key, set bucket index to mod of cap
-                newHashValue = HASH_FUNCTION(currentLink->key);
-                bucketIndex = newHashValue % capacity;
-
-                //Initialize nextLink to 0
-                nextLink = 0;
-
-                //If there is a next link, set it
-                if (currentLink->next != 0) {
-                    nextLink = currentLink->next;
-                }
-
-                //Build the new link, check that worked
-                 newLink = hashLinkNew(currentLink->key, currentLink->value, nextLink);
-                 assert(newLink != 0);
-
-                 //Assign link value to new bucket
-                 newMap->table[bucketIndex] = newLink;
-                 */
-                 //Advance the current pointer
                  currentLink = currentLink->next;
             }
         }
     }
 
-    //Set the old map to a temp pointer, update map to newMap
-    *(&tempMapPointer) = *(map->table);
-    //tempMapPointer->table = map->table;
-    //*map = *newMap;
-    map->table = newMap->table;
-    newMap->table = &tempMapPointer;
-    //map = newMap;
-
-    newMap->capacity = map->capacity;
-
     //Free the old map
-    hashMapDelete(*(&newMap));
+    hashMapCleanUp(map);
 
-    //Set capacity
+    //Reset individual components
+    map->size = newMap->size;
     map->capacity = capacity;
+    map->table = newMap->table;
 
+    free(newMap);
 }
 
 /**
@@ -366,9 +337,9 @@ void hashMapPut(HashMap* map, const char* key, int value)
             }
 
             //Make the new link
-            newLink = hashLinkNew(key, value, nextLink);
+            
 
-            map->table[bucketIndex] = newLink;
+            map->table[bucketIndex] = hashLinkNew(key, value, nextLink);
 
             HashLink* theLink = map->table[bucketIndex];
 

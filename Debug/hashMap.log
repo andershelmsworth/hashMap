@@ -1,4 +1,4 @@
-﻿  hashMap.c
-C:\Users\Work\source\repos\hashMap\hashMap.c(227,9): warning C4101: 'bucketIndex': unreferenced local variable
-C:\Users\Work\source\repos\hashMap\hashMap.c(228,9): warning C4101: 'newHashValue': unreferenced local variable
+﻿  tests.c
+C:\Users\Work\source\repos\hashMap\tests.c(156,5): warning C4244: 'function': conversion from 'float' to 'int', possible loss of data
+C:\Users\Work\source\repos\hashMap\tests.c(200,5): warning C4244: 'function': conversion from 'float' to 'int', possible loss of data
   hashMap.vcxproj -> C:\Users\Work\source\repos\hashMap\Debug\hashMap.exe
