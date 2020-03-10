@@ -7,12 +7,13 @@
 
 #ifndef CU_TEST_H
 #define CU_TEST_H
+#define _CRT_SECURE_NO_WARNINGS
+#pragma warning(disable : 4996)
 
 #include <setjmp.h>
 #include <stdarg.h>
 
 #define CUTEST_VERSION  "CuTest 1.5"
-
 /* CuString */
 
 char* CuStrAlloc(int size);

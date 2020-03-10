@@ -394,7 +394,7 @@ void hashMapRemove(HashMap* map, const char* key)
 
                     //Delete the link
                     hashLinkDelete(currentLink);
-
+                    currentLink = NULL;
                     //Decrement size
                     map->size--;
                 }
@@ -403,6 +403,7 @@ void hashMapRemove(HashMap* map, const char* key)
                     map->table[bucketIndex] = 0;
                     //Delete the link
                     hashLinkDelete(currentLink);
+                    currentLink = NULL;
                     //Decrement size
                     map->size--;
                 }
