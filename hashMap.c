@@ -112,7 +112,8 @@ void hashMapCleanUp(HashMap* map)
             }
         }
     }
-
+    //Free the table
+    free(map->table);
 }
 
 /**

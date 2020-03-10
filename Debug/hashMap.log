@@ -1,2 +1,6 @@
-﻿  hashMap.c
+﻿  CuTest.c
+  tests.c
+C:\Users\Work\source\repos\hashMap\tests.c(156,5): warning C4244: 'function': conversion from 'float' to 'int', possible loss of data
+C:\Users\Work\source\repos\hashMap\tests.c(200,5): warning C4244: 'function': conversion from 'float' to 'int', possible loss of data
+  Generating Code...
   hashMap.vcxproj -> C:\Users\Work\source\repos\hashMap\Debug\hashMap.exe
