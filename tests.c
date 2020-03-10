@@ -344,11 +344,11 @@ void testValueUpdate(CuTest* test)
 
 void addAllTests(CuSuite* suite)
 {
-    SUITE_ADD_TEST(suite, testSingleUnder);
-    SUITE_ADD_TEST(suite, testSingleOver);
-    SUITE_ADD_TEST(suite, testMultipleUnder);
+    //SUITE_ADD_TEST(suite, testSingleUnder);
+    //SUITE_ADD_TEST(suite, testSingleOver);
+    //SUITE_ADD_TEST(suite, testMultipleUnder);
     SUITE_ADD_TEST(suite, testMultipleOver);
-    SUITE_ADD_TEST(suite, testValueUpdate);
+    //SUITE_ADD_TEST(suite, testValueUpdate);
 }
 
 int main()
