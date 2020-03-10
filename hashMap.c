@@ -98,15 +98,21 @@ void hashMapCleanUp(HashMap* map)
     //For each link in the bucket
     for (i = 0; i < map->capacity; i++) {
         //If there is data in the bucket
-        if (map->table[i] != 0) {
+        if (map->table[i] != NULL) {
             //Get the top link
             currentLink = map->table[i];
             //While the bucket is still not empty
-            while (map->table[i] != 0) {
+            while (currentLink != NULL) {
                 //Set temp to current
                 tempLink = currentLink;
                 //Walk current forward
                 currentLink = currentLink->next;
+
+                //Set table to null if last element
+                if (currentLink == NULL) {
+                    map->table[i] = NULL;
+                }
+
                 //Free the old link
                 hashLinkDelete(tempLink);
             }
@@ -209,7 +215,7 @@ void resizeTable(HashMap* map, int capacity)
     HashLink* nextLink;
     HashLink* newLink;
     HashMap* newMap;
-    HashMap* tempMapPointer;
+    HashLink* tempMapPointer;
     int i;
     int bucketIndex;
     int newHashValue;
@@ -260,11 +266,19 @@ void resizeTable(HashMap* map, int capacity)
     }
 
     //Set the old map to a temp pointer, update map to newMap
-    tempMapPointer = map;
-    map = newMap;
+    tempMapPointer = map->table;
+    //tempMapPointer->table = map->table;
+    //*map = *newMap;
+    map->table = newMap->table;
+    newMap->table = tempMapPointer;
+    //map = newMap;
+
+    //Set capacity
+    map->capacity = capacity;
 
     //Free the old map
-    free(tempMapPointer);
+    hashMapCleanUp(newMap);
+
 }
 
 /**
@@ -345,6 +359,12 @@ void hashMapPut(HashMap* map, const char* key, int value)
 
             //Update size
             map->size++;
+
+            //Resize table if new node puts it at capacity
+            if (hashMapTableLoad(map) >= MAX_TABLE_LOAD) {
+                resizeTable(map, (map->capacity * 2));
+            }
+
 
             //Skip further traversal
             i = map->capacity + 5;
