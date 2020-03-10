@@ -71,6 +71,7 @@ void loadDictionary(FILE* file, HashMap* map)
         if (currentWord != NULL) {
             //Put the next word in the dictionary
             hashMapPut(map, currentWord, -1);
+            free(currentWord);
         }
         else {
             //Reached end of file
