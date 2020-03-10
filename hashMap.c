@@ -99,7 +99,7 @@ void hashMapCleanUp(HashMap* map)
     for (i = 0; i < map->capacity; i++) {
         //If there is data in the bucket
 
-        HashLink* bucketData = (&(*map))->table[i];
+        //HashLink* bucketData = (&(*map))->table[i];
 
         if (map->table[i] != NULL) {
             //Get the top link
@@ -229,7 +229,7 @@ void resizeTable(HashMap* map, int capacity)
     // FIXED: implement
     //Check map not null
     assert(map != 0);
-    oldMap = map;
+    //oldMap = map;
 
     //Allocate memory for new table, check that worked
     newMap = hashMapNew(capacity);
