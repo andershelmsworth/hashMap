@@ -281,12 +281,12 @@ void hashMapPut(HashMap* map, const char* key, int value)
     //Variable declarations
     struct HashLink* newLink;
     struct HashLink* currentLink;
-    struct HashLink* nextLink;
-    int i;
+    //struct HashLink* nextLink;
+    //int i;
     int* oldValue;
     int newHashValue;
     int bucketIndex;
-    int keepLooping;
+    //int keepLooping;
 
     // FIXED: implement
     //Check map, key not null
