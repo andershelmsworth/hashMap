@@ -279,10 +279,11 @@ void resizeTable(HashMap* map, int capacity)
 void hashMapPut(HashMap* map, const char* key, int value)
 {
     //Variable declarations
-    //struct HashLink* newLink;
+    struct HashLink* newLink;
     struct HashLink* currentLink;
     struct HashLink* nextLink;
     int i;
+    int* oldValue;
     int newHashValue;
     int bucketIndex;
     int keepLooping;
@@ -295,68 +296,34 @@ void hashMapPut(HashMap* map, const char* key, int value)
     //Init keepLooping to 1, this allows early traversal exit
     keepLooping = 1;
 
-    //For each bucket in the old array
-    for (i = 0; i < map->capacity; i++) {
+    newHashValue = HASH_FUNCTION(key);
+    bucketIndex = newHashValue % map->capacity;
 
-        //Set current to the top link in bucket
-        currentLink = map->table[i];
-
-        //If the bucket is not empty
-        if (currentLink != 0) {
-
-            //While current is still not set to an empty link
-            while ((currentLink != 0) && (keepLooping == 1)) {
-
-                //int bux = hashMapEmptyBuckets(map);
-
-                //If key found, update value
-                if (currentLink != 0 && strcmp(currentLink->key, key) == 0) {
-                    currentLink->value = value;
-                    keepLooping = 0;
-                    //Skip further traversal
-                    i = map->capacity + 5;
-                }
-                else {
-                    //Advance the current pointer
-                    currentLink = currentLink->next;
-                }
-            }
-        }
-        else if ((currentLink == 0) && (keepLooping == 1)) {
-            //The list has been traversed and no matching link was found
-            //Hash the new key, set bucket index to mod of cap
-            newHashValue = HASH_FUNCTION(key);
-            bucketIndex = newHashValue % map->capacity;
-
-            //Init nextLink
-            nextLink = 0;
-
-            //Get head node of bucket list if there is one
-            if (map->table[bucketIndex] != 0) {
-                nextLink = map->table[bucketIndex];
-            }
-
-            //Make the new link
-            
-
-            map->table[bucketIndex] = hashLinkNew(key, value, nextLink);
-
-            //HashLink* theLink = map->table[bucketIndex];
-
-            //Update size
-            map->size++;
-
-            //Resize table if new node puts it at capacity
-            if (hashMapTableLoad(map) >= MAX_TABLE_LOAD) {
-                resizeTable(map, (map->capacity * 2));
-            }
-
-
-            //Skip further traversal
-            i = map->capacity + 5;
-        }
+    if (bucketIndex < 0) {
+        bucketIndex = bucketIndex + map->capacity;
     }
 
+    if (hashMapContainsKey(map, key) == 0) {
+        newLink = hashLinkNew(key, value, nextLink);
+        currentLink = map->table[bucketIndex];
+
+        if (currentLink != 0) {
+            newLink->next = currentLink;
+        }
+
+        map->table[bucketIndex] = newLink;
+
+        map->size++;
+
+        if (hashMapTableLoad(map) > MAX_TABLE_LOAD) {
+            resizeTable(map, (map->capacity * 2));
+        }
+
+    }
+    else {
+        oldValue = hashMapGet(map, key);
+        *oldValue = value;
+    }
 
 }
 
