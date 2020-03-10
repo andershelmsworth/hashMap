@@ -294,7 +294,7 @@ void hashMapPut(HashMap* map, const char* key, int value)
     assert(key != NULL);
 
     //Init keepLooping to 1, this allows early traversal exit
-    keepLooping = 1;
+    //keepLooping = 1;
 
     newHashValue = HASH_FUNCTION(key);
     bucketIndex = newHashValue % map->capacity;
@@ -304,7 +304,7 @@ void hashMapPut(HashMap* map, const char* key, int value)
     }
 
     if (hashMapContainsKey(map, key) == 0) {
-        newLink = hashLinkNew(key, value, nextLink);
+        newLink = hashLinkNew(key, value, NULL);
         currentLink = map->table[bucketIndex];
 
         if (currentLink != 0) {
