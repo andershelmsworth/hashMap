@@ -220,11 +220,11 @@ void resizeTable(HashMap* map, int capacity)
     //Variable declarations
     HashLink* currentLink;
     HashMap* newMap;
-    HashMap* oldMap;
-    HashLink* tempMapPointer;
+    //HashMap* oldMap;
+    //HashLink* tempMapPointer;
     int i;
-    int bucketIndex;
-    int newHashValue;
+    //int bucketIndex;
+    //int newHashValue;
 
     // FIXED: implement
     //Check map not null
@@ -279,7 +279,7 @@ void resizeTable(HashMap* map, int capacity)
 void hashMapPut(HashMap* map, const char* key, int value)
 {
     //Variable declarations
-    struct HashLink* newLink;
+    //struct HashLink* newLink;
     struct HashLink* currentLink;
     struct HashLink* nextLink;
     int i;
@@ -341,7 +341,7 @@ void hashMapPut(HashMap* map, const char* key, int value)
 
             map->table[bucketIndex] = hashLinkNew(key, value, nextLink);
 
-            HashLink* theLink = map->table[bucketIndex];
+            //HashLink* theLink = map->table[bucketIndex];
 
             //Update size
             map->size++;
