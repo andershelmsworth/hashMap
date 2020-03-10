@@ -293,35 +293,42 @@ void hashMapPut(HashMap* map, const char* key, int value)
     assert(map != 0);
     assert(key != NULL);
 
-    //Init keepLooping to 1, this allows early traversal exit
-    //keepLooping = 1;
-
+    //Get index of bucket to be used
     newHashValue = HASH_FUNCTION(key);
     bucketIndex = newHashValue % map->capacity;
 
+    //Make sure not negative
     if (bucketIndex < 0) {
         bucketIndex = bucketIndex + map->capacity;
     }
 
+    //Check if key already in table
     if (hashMapContainsKey(map, key) == 0) {
+        //Make the new link, get top of bucket
         newLink = hashLinkNew(key, value, NULL);
         currentLink = map->table[bucketIndex];
 
+        //set next if bucket had a top
         if (currentLink != 0) {
             newLink->next = currentLink;
         }
 
-        map->table[bucketIndex] = newLink;
-
+        //Increment size
         map->size++;
 
+        //Set the new top to the new link
+        map->table[bucketIndex] = newLink;
+
+        //Resize table if over load
         if (hashMapTableLoad(map) > MAX_TABLE_LOAD) {
             resizeTable(map, (map->capacity * 2));
         }
 
     }
     else {
+        //Was already in table, get the pointer to the old value
         oldValue = hashMapGet(map, key);
+        //Dereference and update the value
         *oldValue = value;
     }
 
@@ -544,7 +551,12 @@ void hashMapPrint(HashMap* map)
             //While it is still set to a value that is not null
             while (currentLink != 0) {
                 //Print a tuple of the key-value pair
-                printf("(key: %s, val: %d) ", currentLink->key, currentLink->value);
+                printf("(key: %s, value: %d)", currentLink->key, currentLink->value);
+
+                //Indicate the link pointed to
+                if (currentLink->next != 0) {
+                    printf("->");
+                }
                 //Advance current counter
                 currentLink = currentLink->next;
             }

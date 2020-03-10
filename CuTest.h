@@ -8,7 +8,7 @@
 #ifndef CU_TEST_H
 #define CU_TEST_H
 #define _CRT_SECURE_NO_WARNINGS
-//#pragma warning(disable : 4996)
+#pragma warning(disable : 4996)
 
 #include <setjmp.h>
 #include <stdarg.h>

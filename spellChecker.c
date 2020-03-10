@@ -54,7 +54,29 @@ char* nextWord(FILE* file)
  */
 void loadDictionary(FILE* file, HashMap* map)
 {
-    // FIXME: implement
+    //Variable declarations
+    int keepLoading;
+    char* currentWord;
+
+    //Check map and file not null
+    assert(file != NULL);
+    assert(map != NULL);
+
+    keepLoading = 1;
+
+    // FIXED: implement
+    //Keep looping over nextWord until map filled
+    while (keepLoading == 1) {
+        currentWord = nextWord(file);
+        if (currentWord != NULL) {
+            //Put the next word in the dictionary
+            hashMapPut(map, currentWord, -1);
+        }
+        else {
+            //Reached end of file
+            keepLoading = 0;
+        }
+    }
 }
 
 /**
@@ -68,8 +90,13 @@ void loadDictionary(FILE* file, HashMap* map)
  */
 int main(int argc, const char** argv)
 {
+    //Variable declarations
+    int* returnedDictVal;
+    HashMap* map;
+
     // FIXME: implement
-    HashMap* map = hashMapNew(1000);
+    map = hashMapNew(1000);
+    assert(map != 0);
 
     FILE* file = fopen("dictionary.txt", "r");
     clock_t timer = clock();
@@ -86,10 +113,19 @@ int main(int argc, const char** argv)
         scanf("%s", inputBuffer);
 
         // Implement the spell checker code here..
-
         if (strcmp(inputBuffer, "quit") == 0)
         {
             quit = 1;
+        }
+        else {
+            returnedDictVal = hashMapGet(map, inputBuffer);
+
+            if (returnedDictVal != NULL) {
+                printf("Spelled correctly.\n\n");
+            }
+            else {
+                printf("Incorrectly spelled.\n\n");
+            }
         }
     }
 
