@@ -251,10 +251,10 @@ void testSingleOver(CuTest* test)
     printf("\n--- Testing single-link chains over threshold ---\n");
     HashLink links[] = {
         { .key = "a", .value = 0, .next = NULL },
-        { .key = "c", .value = 1, .next = NULL },
-        { .key = "d", .value = 2, .next = NULL },
-        { .key = "f", .value = 3, .next = NULL },
-        { .key = "g", .value = 4, .next = NULL }
+        { .key = "c", .value = 1, .next = NULL }
+        //{ .key = "d", .value = 2, .next = NULL },
+        //{ .key = "f", .value = 3, .next = NULL },
+        //{ .key = "g", .value = 4, .next = NULL }
     };
     const char* notKeys[] = { "b", "e", "h" };
     testCase(test, links, notKeys, 5, 3, 1);
