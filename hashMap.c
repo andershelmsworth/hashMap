@@ -124,9 +124,9 @@ void hashMapCleanUp(HashMap* map)
         }
     }
     //Free the table
-    //if (map->table != NULL) {
-    //  free(map->table);
-    //}
+    if (map->table != NULL) {
+        free(map->table);
+    }
 }
 
 /**
