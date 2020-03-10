@@ -113,7 +113,7 @@ void hashMapCleanUp(HashMap* map)
                 currentLink = currentLink->next;
 
                 //Free the old link
-                hashLinkDelete(tempLink);
+                hashMapRemove(map, tempLink->key);
 
                 //Set table to null if last element
                 if (currentLink == NULL) {
