@@ -314,6 +314,6 @@ int main(int argc, const char** argv)
     }*/
     //free(map->table);
     //free(map);
-    //hashMapDelete(map);
+    hashMapDelete(map);
     return 0;
 }
