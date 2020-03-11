@@ -309,7 +309,7 @@ int main(int argc, const char** argv)
                         free(levenMap->table[i]);
                     }
                 }
-                free(levenMap);
+                hashMapDelete(levenMap);
             }
         }
     }
