@@ -21,11 +21,7 @@ C:\Users\Work\source\repos\hashMap\spellChecker.c(207,1): error C4996: 'strcpy':
 C:\Program Files (x86)\Windows Kits\10\Include\10.0.18362.0\ucrt\string.h(133): message : see declaration of 'strcpy'
 C:\Users\Work\source\repos\hashMap\spellChecker.c(229,1): error C4996: 'strcpy': This function or variable may be unsafe. Consider using strcpy_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
 C:\Program Files (x86)\Windows Kits\10\Include\10.0.18362.0\ucrt\string.h(133): message : see declaration of 'strcpy'
-C:\Users\Work\source\repos\hashMap\spellChecker.c(351,42): warning C4047: '=': 'char' differs in levels of indirection from 'void *'
-C:\Users\Work\source\repos\hashMap\spellChecker.c(359,42): warning C4047: '=': 'char' differs in levels of indirection from 'void *'
-C:\Users\Work\source\repos\hashMap\spellChecker.c(404,1): error C4996: 'fopen': This function or variable may be unsafe. Consider using fopen_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+C:\Users\Work\source\repos\hashMap\spellChecker.c(348,17): warning C4047: '!=': 'int' differs in levels of indirection from 'void *'
+C:\Users\Work\source\repos\hashMap\spellChecker.c(406,1): error C4996: 'fopen': This function or variable may be unsafe. Consider using fopen_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
 C:\Program Files (x86)\Windows Kits\10\Include\10.0.18362.0\ucrt\stdio.h(208): message : see declaration of 'fopen'
-  tests.c
-C:\Users\Work\source\repos\hashMap\tests.c(156,5): warning C4244: 'function': conversion from 'float' to 'int', possible loss of data
-C:\Users\Work\source\repos\hashMap\tests.c(200,5): warning C4244: 'function': conversion from 'float' to 'int', possible loss of data
   Generating Code...

@@ -345,6 +345,7 @@ void getString(char* inputBuffer) {
         else {
             //Check for spaces
             for (i = 0; i < 250; i++) {
+                assert(inputBuffer[i] != NULL);
                 if (inputBuffer[i] == ' ') {
                     //Space found, exiting loop early
                     foundSpace = 1;
