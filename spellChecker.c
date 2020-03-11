@@ -242,6 +242,6 @@ int main(int argc, const char** argv)
         }
     }
 
-    hashMapDelete(map);
+    //hashMapDelete(map);
     return 0;
 }

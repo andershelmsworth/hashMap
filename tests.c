@@ -351,7 +351,7 @@ void addAllTests(CuSuite* suite)
     SUITE_ADD_TEST(suite, testValueUpdate);
 }
 
-int main()
+int main2()
 {
     CuSuite* suite = CuSuiteNew();
     addAllTests(suite);
