@@ -52,6 +52,62 @@ int levenshtein(char* stringA, int lengthOfA, char* stringB, int lengthOfB) {
     return editOne + 1;
 }
 
+int levenshteinIter(char* stringA, int lengthOfA, char* stringB, int lengthOfB) {
+    int** levenArr = malloc(sizeof(int*) * (lengthOfA + 1));
+    int levenCost;
+    int editOne;
+    int editTwo;
+    int editThree;
+    int finalCost;
+
+    assert(levenArr != 0);
+
+    for (int i = 0; i < lengthOfA; i++) {
+        levenArr[i] = malloc(sizeof(int) * (lengthOfB + 1));
+        assert(levenArr[i] != 0);
+    }
+
+    for (int j = 0; j < lengthOfA; j++) {
+        levenArr[j][0] = j;
+    }
+
+    for (int k = 0; k < lengthOfB; k++) {
+        levenArr[0][k] = k;
+    }
+
+    for (int x = 1; x < lengthOfB; x++) {
+        for (int y = 1; y < lengthOfA; y++) {
+            if (stringA[y - 1] == stringB[x - 1]) {
+                levenCost = 0;
+            }
+            else {
+                levenCost = 1;
+            }
+
+            editOne = (levenArr[y - 1][x]) + 1;
+            editTwo = (levenArr[y][x - 1]) + 1;
+            editThree = (levenArr[y - 1][x - 1]) + levenCost;
+
+            if (editOne > editTwo) {
+                editOne = editTwo;
+            }
+            if (editOne > editThree) {
+                editOne = editThree;
+            }
+
+            levenArr[y][x] = editOne;
+        }
+    }
+
+    finalCost = levenArr[lengthOfA - 1][lengthOfB - 1];
+
+    for (int z = 0; z < lengthOfA; z++) {
+        free(levenArr[z]);
+    }
+
+    return finalCost;
+}
+
 HashMap* walkThroughLevenshtein(HashMap* incMap, char* comparisonWord) {
     //Variable declarations
     HashLink* currentLink;
@@ -235,13 +291,11 @@ int main(int argc, const char** argv)
                         printf("%s\n\n", levenMap->table[i]->key);
                     }
                 }
-
-                //hashMapDelete(levenMap);
-
+                hashMapDelete(levenMap);
             }
         }
     }
 
-    //hashMapDelete(map);
+    hashMapDelete(map);
     return 0;
 }
