@@ -141,12 +141,12 @@ HashMap* walkThroughLevenshtein(HashMap* incMap, char* comparisonWord) {
                 for (j = 0; j < 5; j++) {
                     if (newMap->table[j] != NULL) {
                         if (levValue < newMap->table[j]->value) {
-                            newMap->table[j] = currentLink;
+                            newMap->table[j] = hashLinkNew(currentLink->key, currentLink->value, NULL);
                             j = 100;
                         }
                     }
                     else {
-                        newMap->table[j] = currentLink;
+                        newMap->table[j] = hashLinkNew(currentLink->key, currentLink->value, NULL);
                         j = 100;
                     }
                 }
