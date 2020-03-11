@@ -347,7 +347,16 @@ void getString(char* inputBuffer) {
                 if (inputBuffer[i] == ' ') {
                     //Space found, exiting loop early
                     foundSpace = 1;
-                    i = 500;
+                    //i = 500;
+                    inputBuffer[i] = NULL;
+                }
+            }
+
+            if (foundSpace == 1) {
+                //Loop over all possible indices
+                for (i = 0; i < 250; i++) {
+                    //Clear input, since space found
+                    inputBuffer[i] = NULL;
                 }
             }
 
