@@ -311,7 +311,7 @@ void hashMapPut(HashMap* map, const char* key, int value)
         map->table[bucketIndex] = newLink;
 
         //Resize table if over load
-        if (hashMapTableLoad(map) > MAX_TABLE_LOAD) {
+        if (hashMapTableLoad(map) >= MAX_TABLE_LOAD) {
             resizeTable(map, (map->capacity * 2));
         }
 
