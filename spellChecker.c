@@ -289,9 +289,11 @@ int main(int argc, const char** argv)
                     printf("Suggestion #%d: ", i);
                     if (levenMap->table[i] != NULL) {
                         printf("%s\n\n", levenMap->table[i]->key);
+                        free(levenMap->table[i]->key);
+                        free(levenMap->table[i]);
                     }
                 }
-                //hashMapDelete(levenMap);
+                free(levenMap);
             }
         }
     }
