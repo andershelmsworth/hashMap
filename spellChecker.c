@@ -356,7 +356,7 @@ void getString(char* inputBuffer) {
                 //Loop over all possible indices
                 for (i = 0; i < 250; i++) {
                     //Clear input, since space found
-                    inputBuffer[i] = NULL;
+                    inputBuffer[i] = '\0';
                 }
             }
 
