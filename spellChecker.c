@@ -348,7 +348,7 @@ void getString(char* inputBuffer) {
                     //Space found, exiting loop early
                     foundSpace = 1;
                     //i = 500;
-                    inputBuffer[i] = NULL;
+                    inputBuffer[i] = '\0';
                 }
             }
 
