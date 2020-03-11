@@ -236,7 +236,7 @@ int main(int argc, const char** argv)
                     }
                 }
 
-                hashMapDelete(levenMap);
+                //hashMapDelete(levenMap);
 
             }
         }
