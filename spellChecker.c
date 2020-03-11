@@ -319,6 +319,57 @@ void loadDictionary(FILE* file, HashMap* map)
 }
 
 /**
+ * Loops until valid string input
+ * @param pointer to char - input buffer
+ */
+void getString(char* inputBuffer) {
+    //Variable declarations
+    int invalid;
+    int i;
+    int foundSpace;
+
+    //Set initial conditions
+    invalid = 1;
+    foundSpace = 0;
+
+    //Loop until valid input
+    while (invalid == 1) {
+        //GetLine, nothing I can think of that would throw errors here
+        fgets(inputBuffer, 250, stdin);
+        //Reject if bad input size
+        if ((strlen(inputBuffer) == 1) || (strlen(inputBuffer) > 250)) {
+            //String too short or long
+            printf("Invalid string length. Please try again: ");
+        }
+        else {
+            //Check for spaces
+            for (i = 0; i < 250; i++) {
+                if (inputBuffer[i] == ' ') {
+                    //Space found, exiting loop early
+                    foundSpace = 1;
+                    i = 500;
+                }
+            }
+
+            if (foundSpace == 1) {
+                //Space was found, retry
+                printf("Space found in input. Please try again: ");
+                foundSpace = 0;
+            }
+            else {
+                //Valid input
+                printf("Input accepted.\n\n");
+
+                //Set null terminator
+                inputBuffer[(strlen(inputBuffer)) - 1] = '\0';
+                //Set input valid now
+                invalid = 0;
+            }
+        }
+    }
+}
+
+/**
  * Checks the spelling of the word provded by the user. If the word is spelled incorrectly,
  * print the 5 closest words as determined by a metric like the Levenshtein distance.
  * Otherwise, indicate that the provded word is spelled correctly. Use dictionary.txt to
@@ -355,11 +406,16 @@ int main(int argc, const char** argv)
     while (!quit)
     {
         printf("Enter a word or \"quit\" to quit: ");
-        scanf("%s", inputBuffer);
+        //scanf("%s", inputBuffer);
+
+        getString(inputBuffer);
+
+        int quitLength = strlen(inputBuffer);
 
         // Implemented the spell checker code here..
         if (strcmp(inputBuffer, "quit") == 0)
         {
+            printf("You chose to quit. Terminating.");
             //Quit was selected
             quit = 1;
         }

@@ -1,10 +1,2 @@
-﻿  CuTest.c
-  hashMap.c
-  spellChecker.c
-C:\Users\Work\source\repos\hashMap\spellChecker.c(175,19): warning C4047: 'return': 'HashMap *' differs in levels of indirection from 'HashMap **'
-  tests.c
-C:\Users\Work\source\repos\hashMap\tests.c(156,5): warning C4244: 'function': conversion from 'float' to 'int', possible loss of data
-C:\Users\Work\source\repos\hashMap\tests.c(200,5): warning C4244: 'function': conversion from 'float' to 'int', possible loss of data
-  Generating Code...
-C:\Users\Work\source\repos\hashMap\spellChecker.c(175): warning C4172: returning address of local variable or temporary: newMap
+﻿  spellChecker.c
   hashMap.vcxproj -> C:\Users\Work\source\repos\hashMap\Debug\hashMap.exe
