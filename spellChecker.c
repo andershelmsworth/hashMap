@@ -291,7 +291,7 @@ int main(int argc, const char** argv)
                         printf("%s\n\n", levenMap->table[i]->key);
                     }
                 }
-                hashMapDelete(levenMap);
+                //hashMapDelete(levenMap);
             }
         }
     }
