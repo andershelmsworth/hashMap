@@ -142,6 +142,8 @@ HashMap* walkThroughLevenshtein(HashMap* incMap, char* comparisonWord) {
                 for (j = 0; j < 5; j++) {
                     if (newMap->table[j] != NULL) {
                         if (levValue < newMap->table[j]->value) {
+                            free(newMap->table[j]->key);
+                            free(newMap->table[j]);
                             newLink = malloc(sizeof(struct HashLink));
                             assert(newLink != 0);
                             newLink->key = malloc(sizeof(char) * (strlen(currentLink->key) + 1));
