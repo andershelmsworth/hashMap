@@ -301,7 +301,7 @@ int main(int argc, const char** argv)
                 printf("Spelled correctly.\n\n");
             }
             else {
-                printf("Incorrectly spelled.\n\n");
+                printf("Incorrectly spelled. Generating suggesstions (this may take a while)...\n\n");
 
                 levenMap = walkThroughLevenshtein(map, inputBuffer);
 
