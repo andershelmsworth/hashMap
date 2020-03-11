@@ -6,6 +6,104 @@
 #include <string.h>
 #include <ctype.h>
 
+
+/**
+ * Loads the contents of the file into the hash map.
+ * @param pointer to char - word
+ * @param map
+ */
+
+int levenshtein(char* stringA, int lengthOfA, char* stringB, int lengthOfB) {
+    //Variable declarations
+    int editOne;
+    int editTwo;
+    int editThree;
+
+    //Check if A is empty
+    if (!lengthOfA) {
+        return lengthOfB;
+    }
+    //Check if B is empty
+    if (!lengthOfB) {
+        return lengthOfA;
+    }
+
+    //Last letters are the same so difference is whatever is req'd to edit the rest
+    if (stringA[lengthOfA - 1] == stringB[lengthOfB - 1]) {
+        return levenshtein(stringA, lengthOfA - 1, stringB, lengthOfB - 1);
+    }
+
+    //Try removing last letter of A
+    editOne = levenshtein(stringA, lengthOfA, stringB, lengthOfB - 1);
+    //Try changing last letter of A to that of B
+    editTwo = levenshtein(stringA, lengthOfA - 1, stringB, lengthOfB - 1);
+    //Try removing last letter of B
+    editThree = levenshtein(stringA, lengthOfA - 1, stringB, lengthOfB);
+
+    //Get the smallest of the edits
+    if (editOne > editTwo) {
+        editOne = editTwo;
+    }
+    if (editOne > editThree) {
+        editOne = editThree;
+    }
+
+    //Return smallest plus one for the edit
+    return editOne + 1;
+}
+
+HashMap* walkThroughLevenshtein(HashMap* incMap, char* comparisonWord) {
+    //Variable declarations
+    HashLink* currentLink;
+    HashMap* newMap;
+    int i;
+    int j;
+    int levValue;
+    int lengthOfDictWord;
+    int suggestionIterator;
+    char* dictString;
+
+    // FIXME: implement
+    newMap = hashMapNew(5);
+    assert(newMap != 0);
+
+    suggestionIterator = 1;
+
+    for (i = 0; i < incMap->capacity; i++) {
+
+        currentLink = incMap->table[i];
+
+        if (currentLink != NULL) {
+
+            while (currentLink != NULL) {
+                
+                dictString = currentLink->key;
+
+                levValue = levenshtein(comparisonWord, (strlen(comparisonWord) + 0), dictString, (strlen(currentLink->key)+0));
+                currentLink->value = levValue;
+
+                for (j = 0; j < 5; j++) {
+                    if (newMap->table[j] != NULL) {
+                        if (levValue < newMap->table[j]->value) {
+                            newMap->table[j] = currentLink;
+                            j = 100;
+                        }
+                    }
+                    else {
+                        newMap->table[j] = currentLink;
+                        j = 100;
+                    }
+                }
+
+                currentLink = currentLink->next;
+            }
+            int x = 1;
+        }
+        int y = 2;
+    }
+    return newMap;
+}
+
 /**
  * Allocates a string for the next word in the file and returns it. This string
  * is null terminated. Returns NULL after reaching the end of the file.
@@ -94,6 +192,8 @@ int main(int argc, const char** argv)
     //Variable declarations
     int* returnedDictVal;
     HashMap* map;
+    HashMap* levenMap;
+    int i;
 
     // FIXME: implement
     map = hashMapNew(1000);
@@ -126,6 +226,18 @@ int main(int argc, const char** argv)
             }
             else {
                 printf("Incorrectly spelled.\n\n");
+
+                levenMap = walkThroughLevenshtein(map, inputBuffer);
+
+                for (i = 0; i < 5; i++) {
+                    printf("Suggestion #%d: ", i);
+                    if (levenMap->table[i] != NULL) {
+                        printf("%s\n\n", levenMap->table[i]->key);
+                    }
+                }
+
+                hashMapDelete(levenMap);
+
             }
         }
     }
