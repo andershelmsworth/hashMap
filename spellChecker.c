@@ -300,7 +300,7 @@ int main(int argc, const char** argv)
             }
         }
     }
-    for (k = 0; k < map->capacity; k++) {
+    /*for (k = 0; k < map->capacity; k++) {
         currentLink = map->table[k];
 
         if (currentLink != NULL) {
@@ -311,7 +311,7 @@ int main(int argc, const char** argv)
                 map->table[k] = currentLink;
             }
         }
-    }
+    }*/
     //free(map->table);
     //free(map);
     //hashMapDelete(map);
