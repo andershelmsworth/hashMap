@@ -249,7 +249,9 @@ int main(int argc, const char** argv)
     int* returnedDictVal;
     HashMap* map;
     HashMap* levenMap;
+    HashLink* currentLink;
     int i;
+    int k;
 
     // FIXME: implement
     map = hashMapNew(1000);
@@ -261,6 +263,7 @@ int main(int argc, const char** argv)
     timer = clock() - timer;
     printf("Dictionary loaded in %f seconds\n", (float)timer / (float)CLOCKS_PER_SEC);
     fclose(file);
+    currentLink = 0;
 
     char inputBuffer[256];
     int quit = 0;
@@ -297,7 +300,20 @@ int main(int argc, const char** argv)
             }
         }
     }
+    for (k = 0; k < map->capacity; k++) {
+        currentLink = map->table[k];
 
-    hashMapDelete(map);
+        if (currentLink != NULL) {
+            while (currentLink != NULL){
+                free(map->table[k]->key);
+                currentLink = currentLink->next;
+                free(map->table[k]);
+                map->table[k] = currentLink;
+            }
+        }
+    }
+    free(map->table);
+    free(map);
+    //hashMapDelete(map);
     return 0;
 }
