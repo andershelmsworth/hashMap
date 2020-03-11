@@ -67,7 +67,7 @@ HashMap* walkThroughLevenshtein(HashMap* incMap, char* comparisonWord) {
     newMap = hashMapNew(5);
     assert(newMap != 0);
 
-    suggestionIterator = 1;
+    //suggestionIterator = 1;
 
     for (i = 0; i < incMap->capacity; i++) {
 
@@ -97,9 +97,9 @@ HashMap* walkThroughLevenshtein(HashMap* incMap, char* comparisonWord) {
 
                 currentLink = currentLink->next;
             }
-            int x = 1;
+            //int x = 1;
         }
-        int y = 2;
+        //int y = 2;
     }
     return newMap;
 }
