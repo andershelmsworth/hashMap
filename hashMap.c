@@ -107,7 +107,7 @@ void hashMapCleanUp(HashMap* map)
                 //Set temp to current
                 tempLink = currentLink;
                 
-                //Walk current forward FIXME
+                //Walk current forward FIXED
                 currentLink = currentLink->next;
 
                 //Free the old link
