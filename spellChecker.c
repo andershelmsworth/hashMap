@@ -261,7 +261,7 @@ int main(int argc, const char** argv)
     //Variable declarations
     int* returnedDictVal;
     HashMap* map;
-    HashMap* levenMap;
+    HashMap levenMap;
     //HashLink* currentLink;
     int i;
     //int k;
@@ -299,18 +299,18 @@ int main(int argc, const char** argv)
             else {
                 printf("Incorrectly spelled.\n\n");
 
-                levenMap = walkThroughLevenshtein(map, inputBuffer);
+                levenMap = *(walkThroughLevenshtein(map, inputBuffer));
 
                 for (i = 0; i < 5; i++) {
                     printf("Suggestion #%d: ", i);
-                    if (levenMap->table[i] != NULL) {
-                        printf("%s\n\n", levenMap->table[i]->key);
-                        free(levenMap->table[i]->key);
-                        free(levenMap->table[i]);
+                    if (levenMap.table[i] != NULL) {
+                        printf("%s\n\n", levenMap.table[i]->key);
+                        free(levenMap.table[i]->key);
+                        free(levenMap.table[i]);
                     }
                 }
-                free(levenMap->table);
-                free(levenMap);
+                free(levenMap.table);
+                //free(levenMap);
             }
         }
     }
