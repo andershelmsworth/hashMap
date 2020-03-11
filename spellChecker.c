@@ -252,37 +252,37 @@ HashMap* walkThroughLevenshtein(HashMap* incMap, char* comparisonWord) {
  */
 char* nextWord(FILE* file)
 {
-    int maxLength = 16;
-    int length = 0;
-    char* word = malloc(sizeof(char) * maxLength);
-    while (1)
+int maxLength = 16;
+int length = 0;
+char* word = malloc(sizeof(char) * maxLength);
+while (1)
+{
+    char c = fgetc(file);
+    if ((c >= '0' && c <= '9') ||
+        (c >= 'A' && c <= 'Z') ||
+        (c >= 'a' && c <= 'z') ||
+        c == '\'')
     {
-        char c = fgetc(file);
-        if ((c >= '0' && c <= '9') ||
-            (c >= 'A' && c <= 'Z') ||
-            (c >= 'a' && c <= 'z') ||
-            c == '\'')
+        if (length + 1 >= maxLength)
         {
-            if (length + 1 >= maxLength)
-            {
-                maxLength *= 2;
-                word = realloc(word, maxLength);
-            }
-            word[length] = c;
-            length++;
+            maxLength *= 2;
+            word = realloc(word, maxLength);
         }
-        else if (length > 0 || c == EOF)
-        {
-            break;
-        }
+        word[length] = c;
+        length++;
     }
-    if (length == 0)
+    else if (length > 0 || c == EOF)
     {
-        free(word);
-        return NULL;
+        break;
     }
-    word[length] = '\0';
-    return word;
+}
+if (length == 0)
+{
+    free(word);
+    return NULL;
+}
+word[length] = '\0';
+return word;
 }
 
 /**
@@ -327,11 +327,13 @@ void getString(char* inputBuffer) {
     int invalid;
     int i;
     int foundSpace;
+    int foundNonAlpha;
 
     //Set initial conditions
     invalid = 1;
     foundSpace = 0;
     inputBuffer[0] = 0;
+    foundNonAlpha = 1;
 
     //Loop until valid input
     while (invalid == 1) {
@@ -345,7 +347,6 @@ void getString(char* inputBuffer) {
         else {
             //Check for spaces
             for (i = 0; i < 250; i++) {
-                assert(inputBuffer[i] != NULL);
                 if (inputBuffer[i] == ' ') {
                     //Space found, exiting loop early
                     foundSpace = 1;
@@ -364,17 +365,45 @@ void getString(char* inputBuffer) {
 
             if (foundSpace == 1) {
                 //Space was found, retry
-                printf("Space found in input. Please try again: ");
+                printf("Spaces found in input. Please try again: ");
                 foundSpace = 0;
             }
             else {
-                //Valid input
-                printf("Input accepted.\n\n");
+                //No spaces found
+                for (i = 0; i < strlen(inputBuffer) - 1; i++) {
+                    //Check for nonalpha
+                    foundNonAlpha = isalpha(inputBuffer[i]);
+                    if (foundNonAlpha == 0) {
+                        //Found nonalpha, exiting loop
+                        i = 500;
+                    }
+                }
 
-                //Set null terminator
-                inputBuffer[(strlen(inputBuffer)) - 1] = '\0';
-                //Set input valid now
-                invalid = 0;
+                if (foundNonAlpha == 0) {
+                    //Loop over all possible indices
+                    for (i = 0; i < 250; i++) {
+                        //Clear input, since space found
+                        inputBuffer[i] = '\0';
+                    }
+                    //reset foundNonAlpha
+                    foundNonAlpha = 1;
+                    printf("Non-alphabetic characters found in input. Please try again: ");
+                }
+                else {
+                    //Valid input
+                    printf("Input accepted.\n\n");
+
+                    //Set null terminator
+                    inputBuffer[(strlen(inputBuffer)) - 1] = '\0';
+
+                    //Convert to lower case
+                    for (i = 0; i < strlen(inputBuffer); i++) {
+                        inputBuffer[i] = tolower(inputBuffer[i]);
+                    }
+
+                    //Set input valid now
+                    invalid = 0;
+                }
             }
         }
     }
