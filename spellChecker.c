@@ -473,9 +473,10 @@ int main(int argc, const char** argv)
                 //Populate suggestion map
                 levenMap = walkThroughLevenshtein(map, inputBuffer);
 
+                printf("Did you mean...?\n\n");
+
                 //Print suggestions
                 for (i = 0; i < 5; i++) {
-                    printf("Did you mean...?\n\n");
                     printf("Suggestion #%d: ", i);
                     if (levenMap->table[i] != NULL) {
                         printf("%s\n\n", levenMap->table[i]->key);
