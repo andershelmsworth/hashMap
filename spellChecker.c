@@ -249,9 +249,9 @@ int main(int argc, const char** argv)
     int* returnedDictVal;
     HashMap* map;
     HashMap* levenMap;
-    HashLink* currentLink;
+    //HashLink* currentLink;
     int i;
-    int k;
+    //int k;
 
     // FIXME: implement
     map = hashMapNew(1000);

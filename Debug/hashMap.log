@@ -17,12 +17,9 @@ C:\Program Files (x86)\Windows Kits\10\Include\10.0.18362.0\ucrt\stdio.h(1774): 
 C:\Users\Work\source\repos\hashMap\hashMap.c(48,1): error C4996: 'strcpy': This function or variable may be unsafe. Consider using strcpy_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
 C:\Program Files (x86)\Windows Kits\10\Include\10.0.18362.0\ucrt\string.h(133): message : see declaration of 'strcpy'
   spellChecker.c
+C:\Users\Work\source\repos\hashMap\spellChecker.c(266,17): error C2065: 'currentLink': undeclared identifier
 C:\Users\Work\source\repos\hashMap\spellChecker.c(260,1): error C4996: 'fopen': This function or variable may be unsafe. Consider using fopen_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
 C:\Program Files (x86)\Windows Kits\10\Include\10.0.18362.0\ucrt\stdio.h(208): message : see declaration of 'fopen'
 C:\Users\Work\source\repos\hashMap\spellChecker.c(273,1): error C4996: 'scanf': This function or variable may be unsafe. Consider using scanf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
 C:\Program Files (x86)\Windows Kits\10\Include\10.0.18362.0\ucrt\stdio.h(1274): message : see declaration of 'scanf'
-C:\Users\Work\source\repos\hashMap\spellChecker.c(254,9): warning C4101: 'k': unreferenced local variable
-  tests.c
-C:\Users\Work\source\repos\hashMap\tests.c(156,5): warning C4244: 'function': conversion from 'float' to 'int', possible loss of data
-C:\Users\Work\source\repos\hashMap\tests.c(200,5): warning C4244: 'function': conversion from 'float' to 'int', possible loss of data
   Generating Code...
