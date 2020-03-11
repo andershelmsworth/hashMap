@@ -59,8 +59,8 @@ HashMap* walkThroughLevenshtein(HashMap* incMap, char* comparisonWord) {
     int i;
     int j;
     int levValue;
-    int lengthOfDictWord;
-    int suggestionIterator;
+    //int lengthOfDictWord;
+    //int suggestionIterator;
     char* dictString;
 
     // FIXME: implement
