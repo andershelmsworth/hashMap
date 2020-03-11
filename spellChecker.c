@@ -463,17 +463,19 @@ int main(int argc, const char** argv)
 
             if (returnedDictVal != NULL) {
                 //Word spelled correctly
-                printf("Spelled correctly.\n\n");
+                printf("The inputted word %s is spelled correctly\n\n", inputBuffer);
             }
             else {
                 //Not found in dict
-                printf("Incorrectly spelled. Generating suggesstions (this may take a while)...\n\n");
+                printf("The inputted word %s is spelled incorrectly\n\n", inputBuffer);
+                printf("Generating suggesstions (this may take a while)...\n\n");
 
                 //Populate suggestion map
                 levenMap = walkThroughLevenshtein(map, inputBuffer);
 
                 //Print suggestions
                 for (i = 0; i < 5; i++) {
+                    printf("Did you mean...?\n\n");
                     printf("Suggestion #%d: ", i);
                     if (levenMap->table[i] != NULL) {
                         printf("%s\n\n", levenMap->table[i]->key);
