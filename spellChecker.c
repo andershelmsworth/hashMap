@@ -410,8 +410,6 @@ int main(int argc, const char** argv)
 
         getString(inputBuffer);
 
-        int quitLength = strlen(inputBuffer);
-
         // Implemented the spell checker code here..
         if (strcmp(inputBuffer, "quit") == 0)
         {
