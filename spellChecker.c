@@ -111,6 +111,7 @@ int levenshteinIter(char* stringA, int lengthOfA, char* stringB, int lengthOfB) 
 HashMap* walkThroughLevenshtein(HashMap* incMap, char* comparisonWord) {
     //Variable declarations
     HashLink* currentLink;
+    HashLink* newLink;
     HashMap* newMap;
     int i;
     int j;
@@ -141,12 +142,24 @@ HashMap* walkThroughLevenshtein(HashMap* incMap, char* comparisonWord) {
                 for (j = 0; j < 5; j++) {
                     if (newMap->table[j] != NULL) {
                         if (levValue < newMap->table[j]->value) {
-                            newMap->table[j] = hashLinkNew(currentLink->key, currentLink->value, NULL);
+                            newLink = malloc(sizeof(struct HashLink));
+                            assert(newLink != 0);
+                            newLink->key = malloc(sizeof(char) * (strlen(currentLink->key) + 1));
+                            assert(newLink->key != 0);
+                            strcpy(newLink->key, currentLink->key);
+                            newLink->value = currentLink->value;
+                            newMap->table[j] = newLink;
                             j = 100;
                         }
                     }
                     else {
-                        newMap->table[j] = hashLinkNew(currentLink->key, currentLink->value, NULL);
+                        newLink = malloc(sizeof(struct HashLink));
+                        assert(newLink != 0);
+                        newLink->key = malloc(sizeof(char) * (strlen(currentLink->key) + 1));
+                        assert(newLink->key != 0);
+                        strcpy(newLink->key, currentLink->key);
+                        newLink->value = currentLink->value;
+                        newMap->table[j] = newLink;
                         j = 100;
                     }
                 }
