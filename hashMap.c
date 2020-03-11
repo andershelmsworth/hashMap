@@ -99,8 +99,6 @@ void hashMapCleanUp(HashMap* map)
     for (i = 0; i < map->capacity; i++) {
         //If there is data in the bucket
 
-        //HashLink* bucketData = (&(*map))->table[i];
-
         if (map->table[i] != NULL) {
             //Get the top link
             currentLink = map->table[i];
@@ -220,16 +218,11 @@ void resizeTable(HashMap* map, int capacity)
     //Variable declarations
     HashLink* currentLink;
     HashMap* newMap;
-    //HashMap* oldMap;
-    //HashLink* tempMapPointer;
     int i;
-    //int bucketIndex;
-    //int newHashValue;
 
     // FIXED: implement
     //Check map not null
     assert(map != 0);
-    //oldMap = map;
 
     //Allocate memory for new table, check that worked
     newMap = hashMapNew(capacity);
@@ -260,6 +253,7 @@ void resizeTable(HashMap* map, int capacity)
     map->capacity = capacity;
     map->table = newMap->table;
 
+    //Free the old map
     free(newMap);
 }
 
@@ -281,12 +275,9 @@ void hashMapPut(HashMap* map, const char* key, int value)
     //Variable declarations
     struct HashLink* newLink;
     struct HashLink* currentLink;
-    //struct HashLink* nextLink;
-    //int i;
     int* oldValue;
     int newHashValue;
     int bucketIndex;
-    //int keepLooping;
 
     // FIXED: implement
     //Check map, key not null
@@ -344,7 +335,6 @@ void hashMapPut(HashMap* map, const char* key, int value)
 void hashMapRemove(HashMap* map, const char* key)
 {
     //Variable declarations
-    //HashLink* linkToRemove;
     HashLink* currentLink;
     HashLink* previousLink;
     int hashedValue;
@@ -357,6 +347,7 @@ void hashMapRemove(HashMap* map, const char* key)
     hashedValue = HASH_FUNCTION(key);
     bucketIndex = hashedValue % map->capacity;
 
+    //Get link at the bucket, initialize previous
     currentLink = map->table[bucketIndex];
     previousLink = currentLink;
 

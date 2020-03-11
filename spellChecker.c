@@ -1,3 +1,12 @@
+/*
+ * CS 261 Data Structures
+ * Assignment 5
+ * Name: Andrew Helmsworth
+ * Date: 2020/02/18
+ * Sources: See Works Cited at end of file
+ */
+
+//Inclusions
 #include "hashMap.h"
 #include <assert.h>
 #include <time.h>
@@ -6,13 +15,14 @@
 #include <string.h>
 #include <ctype.h>
 
-
 /**
- * Loads the contents of the file into the hash map.
- * @param pointer to char - word
- * @param map
+ * Recursively computes Levenshtein distance.
+ * @param pointer to char - stringA - string being compared
+ * @param int - lengthOfA - length of string being compared
+ * @param pointer to char - stringB - string from dictionary
+ * @param int - lengthOfB - length of string from dictionary
  */
-
+//CITATION: Adapted from RosettaCode, Wikipedia - see Works Cited at end of file
 int levenshtein(char* stringA, int lengthOfA, char* stringB, int lengthOfB) {
     //Variable declarations
     int editOne;
@@ -52,63 +62,96 @@ int levenshtein(char* stringA, int lengthOfA, char* stringB, int lengthOfB) {
     return editOne + 1;
 }
 
+/**
+ * Iteratively computes Levenshtein distance.
+ * @param pointer to char - stringA - string being compared
+ * @param int - lengthOfA - length of string being compared
+ * @param pointer to char - stringB - string from dictionary
+ * @param int - lengthOfB - length of string from dictionary
+ */
+ //CITATION: Adapted from RosettaCode, Wikipedia - see Works Cited at end of file
 int levenshteinIter(char* stringA, int lengthOfA, char* stringB, int lengthOfB) {
-    int** levenArr = malloc(sizeof(int*) * (lengthOfA + 1));
+    
+    //Variable declarations
     int levenCost;
     int editOne;
     int editTwo;
     int editThree;
     int finalCost;
+    int i;
+    int j;
+    int k;
+    int x;
+    int y;
+    int z;
 
+    //Make a new array matrix
+    int** levenArr = malloc(sizeof(int*) * (lengthOfA + 1));
     assert(levenArr != 0);
 
-    for (int i = 0; i < lengthOfA; i++) {
+    //Populate matrix with space for ints
+    for (i = 0; i < lengthOfA; i++) {
         levenArr[i] = malloc(sizeof(int) * (lengthOfB + 1));
         assert(levenArr[i] != 0);
     }
 
-    for (int j = 0; j < lengthOfA; j++) {
+    //Set 0 along y axis
+    for (j = 0; j < lengthOfA; j++) {
         levenArr[j][0] = j;
     }
 
-    for (int k = 0; k < lengthOfB; k++) {
+    //Set 0 along x axis
+    for (k = 0; k < lengthOfB; k++) {
         levenArr[0][k] = k;
     }
 
-    for (int x = 1; x < lengthOfB; x++) {
-        for (int y = 1; y < lengthOfA; y++) {
+    //Loop over the x axis
+    for (x = 1; x < lengthOfB; x++) {
+        //Loop over the y axis
+        for (y = 1; y < lengthOfA; y++) {
             if (stringA[y - 1] == stringB[x - 1]) {
+                //Last letters are the same
                 levenCost = 0;
             }
             else {
                 levenCost = 1;
             }
 
+            //Try three types of edits
             editOne = (levenArr[y - 1][x]) + 1;
             editTwo = (levenArr[y][x - 1]) + 1;
             editThree = (levenArr[y - 1][x - 1]) + levenCost;
 
+            //Get the smallest
             if (editOne > editTwo) {
                 editOne = editTwo;
             }
             if (editOne > editThree) {
                 editOne = editThree;
             }
-
+            //Set the smallest
             levenArr[y][x] = editOne;
         }
     }
-
+    //Calc final cost
     finalCost = levenArr[lengthOfA - 1][lengthOfB - 1];
 
-    for (int z = 0; z < lengthOfA; z++) {
+    //Free the 2dArr
+    for (z = 0; z < lengthOfA; z++) {
         free(levenArr[z]);
     }
 
+    //Return final cost
     return finalCost;
 }
 
+/**
+ * Sets Levenshtein for each word in the dictionary.
+ * @param pointer to hashMap - incMap - dictionary
+ * @param pointer to char - comparisonWord - word being compared
+ */
 HashMap* walkThroughLevenshtein(HashMap* incMap, char* comparisonWord) {
+    
     //Variable declarations
     HashLink* currentLink;
     HashLink* newLink;
@@ -116,64 +159,88 @@ HashMap* walkThroughLevenshtein(HashMap* incMap, char* comparisonWord) {
     int i;
     int j;
     int levValue;
-    //int lengthOfDictWord;
-    //int suggestionIterator;
     char* dictString;
 
-    // FIXME: implement
+    // FIXED: implement
+    //Make new map, assert not null
     newMap = hashMapNew(5);
     assert(newMap != 0);
 
-    //suggestionIterator = 1;
-
+    //Loop over each bucket in map
     for (i = 0; i < incMap->capacity; i++) {
 
+        //Get link at bucket
         currentLink = incMap->table[i];
 
+        //If bucket not empty
         if (currentLink != NULL) {
 
+            //While bottom of bucket not reached
             while (currentLink != NULL) {
                 
+                //Get the key
                 dictString = currentLink->key;
 
+                //Calc Levenshtein value
                 levValue = levenshtein(comparisonWord, (strlen(comparisonWord) + 0), dictString, (strlen(currentLink->key)+0));
                 currentLink->value = levValue;
 
+                //Loop over the 5 buckets in newMap
                 for (j = 0; j < 5; j++) {
                     if (newMap->table[j] != NULL) {
+                        //There was a value in the bucket
                         if (levValue < newMap->table[j]->value) {
+                            //Value in bucket greater than new value
+                            //Free the old key and link
                             free(newMap->table[j]->key);
                             free(newMap->table[j]);
+
+                            //Make a new link, check not null
                             newLink = malloc(sizeof(struct HashLink));
                             assert(newLink != 0);
+
+                            //Make a new key, check not null
                             newLink->key = malloc(sizeof(char) * (strlen(currentLink->key) + 1));
                             assert(newLink->key != 0);
+
+                            //Copy old key to new link
                             strcpy(newLink->key, currentLink->key);
+
+                            //Set value and next
                             newLink->value = currentLink->value;
                             newLink->next = NULL;
+
+                            //Set bucket index to new link and exit loop
                             newMap->table[j] = newLink;
                             j = 100;
                         }
                     }
                     else {
+                        //No link in bucket
+                        //Make a new link, check not null
                         newLink = malloc(sizeof(struct HashLink));
                         assert(newLink != 0);
+
+                        //Make space for key, check not null
                         newLink->key = malloc(sizeof(char) * (strlen(currentLink->key) + 1));
                         assert(newLink->key != 0);
+
+                        //Copy in new key and value, set next to null
                         strcpy(newLink->key, currentLink->key);
                         newLink->value = currentLink->value;
                         newLink->next = NULL;
+
+                        //Set bucket to new link, exit loop
                         newMap->table[j] = newLink;
                         j = 100;
                     }
                 }
-
+                //Advance currentLink
                 currentLink = currentLink->next;
             }
-            //int x = 1;
         }
-        //int y = 2;
     }
+    //Return finished suggestion map
     return newMap;
 }
 
@@ -266,74 +333,76 @@ int main(int argc, const char** argv)
     int* returnedDictVal;
     HashMap* map;
     HashMap* levenMap;
-    //HashLink* currentLink;
     int i;
-    //int k;
 
-    // FIXME: implement
+    // FIXED: implement
+    //Make new map, check not null
     map = hashMapNew(1000);
     assert(map != 0);
 
+    //Load dictionary
     FILE* file = fopen("dictionary.txt", "r");
     clock_t timer = clock();
     loadDictionary(file, map);
     timer = clock() - timer;
     printf("Dictionary loaded in %f seconds\n", (float)timer / (float)CLOCKS_PER_SEC);
     fclose(file);
-    //currentLink = 0;
 
     char inputBuffer[256];
     int quit = 0;
+
+    //Loop until quit entered
     while (!quit)
     {
         printf("Enter a word or \"quit\" to quit: ");
         scanf("%s", inputBuffer);
 
-        // Implement the spell checker code here..
+        // Implemented the spell checker code here..
         if (strcmp(inputBuffer, "quit") == 0)
         {
+            //Quit was selected
             quit = 1;
         }
         else {
+            //Try checking the word
             returnedDictVal = hashMapGet(map, inputBuffer);
 
             if (returnedDictVal != NULL) {
+                //Word spelled correctly
                 printf("Spelled correctly.\n\n");
             }
             else {
+                //Not found in dict
                 printf("Incorrectly spelled. Generating suggesstions (this may take a while)...\n\n");
 
+                //Populate suggestion map
                 levenMap = walkThroughLevenshtein(map, inputBuffer);
 
+                //Print suggestions
                 for (i = 0; i < 5; i++) {
                     printf("Suggestion #%d: ", i);
                     if (levenMap->table[i] != NULL) {
                         printf("%s\n\n", levenMap->table[i]->key);
+                        //Free old key and link
                         free(levenMap->table[i]->key);
                         free(levenMap->table[i]);
                     }
                 }
+                //Free table and map
                 free(levenMap->table);
                 free(levenMap);
-
-                //hashMapDelete(levenMap);
             }
         }
     }
-    /*for (k = 0; k < map->capacity; k++) {
-        currentLink = map->table[k];
-
-        if (currentLink != NULL) {
-            while (currentLink != NULL){
-                free(map->table[k]->key);
-                currentLink = currentLink->next;
-                free(map->table[k]);
-                map->table[k] = currentLink;
-            }
-        }
-    }*/
-    //free(map->table);
-    //free(map);
+    //Free old map
     hashMapDelete(map);
     return 0;
 }
+
+/* WORKS CITED
+
+RosettaCode contributors, "Levenshtein distance," RosettaCode, https://rosettacode.org/wiki/Levenshtein_distance (accessed March 11, 2020).
+
+Wikipedia contributors, "Levenshtein distance," Wikipedia, The Free Encyclopedia, https://en.wikipedia.org/w/index.php?title=Levenshtein_distance&oldid=944604589 (accessed March 11, 2020).
+
+*/
