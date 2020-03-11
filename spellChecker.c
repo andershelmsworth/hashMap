@@ -331,6 +331,7 @@ void getString(char* inputBuffer) {
     //Set initial conditions
     invalid = 1;
     foundSpace = 0;
+    inputBuffer[0] = 0;
 
     //Loop until valid input
     while (invalid == 1) {
