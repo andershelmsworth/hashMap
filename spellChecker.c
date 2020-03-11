@@ -172,7 +172,7 @@ HashMap* walkThroughLevenshtein(HashMap* incMap, char* comparisonWord) {
         }
         //int y = 2;
     }
-    return newMap;
+    return &newMap;
 }
 
 /**
@@ -307,14 +307,14 @@ int main(int argc, const char** argv)
                     printf("Suggestion #%d: ", i);
                     if (levenMap->table[i] != NULL) {
                         printf("%s\n\n", levenMap->table[i]->key);
-                        //free(levenMap->table[i]->key);
-                        //free(levenMap->table[i]);
+                        free(levenMap->table[i]->key);
+                        free(levenMap->table[i]);
                     }
                 }
-                //free(levenMap->table);
-                //free(levenMap);
+                free(levenMap->table);
+                free(levenMap);
 
-                hashMapDelete(levenMap);
+                //hashMapDelete(levenMap);
             }
         }
     }
