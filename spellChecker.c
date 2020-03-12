@@ -373,7 +373,7 @@ void getString(char* inputBuffer) {
                 for (i = 0; i < strlen(inputBuffer) - 1; i++) {
                     //Check for nonalpha
                     foundNonAlpha = isalpha(inputBuffer[i]);
-                    if (foundNonAlpha == 0) {
+                    if (foundNonAlpha == 0 && inputBuffer[i] != '\'') {
                         //Found nonalpha, exiting loop
                         i = 500;
                     }
@@ -398,7 +398,9 @@ void getString(char* inputBuffer) {
 
                     //Convert to lower case
                     for (i = 0; i < strlen(inputBuffer); i++) {
-                        inputBuffer[i] = tolower(inputBuffer[i]);
+                        if (inputBuffer[i] != '\'') {
+                            inputBuffer[i] = tolower(inputBuffer[i]);
+                        }
                     }
 
                     //Set input valid now
@@ -441,6 +443,11 @@ int main(int argc, const char** argv)
 
     char inputBuffer[256];
     int quit = 0;
+
+    //Initialize input buffer
+    for (i = 0; i < 256; i++) {
+        inputBuffer[i] = '\0';
+    }
 
     //Loop until quit entered
     while (!quit)
